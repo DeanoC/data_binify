@@ -1,6 +1,6 @@
-#include "core/core.h"
-#include "catch/catch.hpp"
-#include "binify/binify_c.h"
+#include "al2o3_platform/platform.h"
+#include "al2o3_catch2/catch2.hpp"
+#include "data_binify/binify.h"
 
 TEST_CASE( "Alloc and Free", "[Binify_C]" )
 {

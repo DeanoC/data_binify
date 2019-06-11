@@ -410,7 +410,7 @@ void Binify::Fixup(uint64_t i)
 } // end namespace
 
 // C api for binify
-#include "binify/binify_c.h"
+#include "data_binify/binify.h"
 struct BINIFY_HANDLE_IMPL : public BINIFY_HANDLE
 {
 	binify::Binify binny;
