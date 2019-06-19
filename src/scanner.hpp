@@ -2,9 +2,9 @@
 #define yyHEADER_H 1
 #define yyIN_HEADER 1
 
-#line 5 "scanner.hxx"
+#line 5 "scanner.hpp"
 
-#line 7 "scanner.hxx"
+#line 7 "scanner.hpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -519,9 +519,9 @@ static int yy_flex_strlen ( const char * );
 #undef yyTABLES_NAME
 #endif
 
-#line 92 "lexer.l"
+#line 90 "lexer.l"
 
 
-#line 525 "scanner.hxx"
+#line 525 "scanner.hpp"
 #undef yyIN_HEADER
 #endif /* yyHEADER_H */

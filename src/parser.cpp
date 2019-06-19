@@ -33,7 +33,7 @@
 
 // First part of user declarations.
 
-#line 37 "parser.cxx" // lalr1.cc:406
+#line 37 "parser.cpp" // lalr1.cc:406
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -43,25 +43,20 @@
 #  endif
 # endif
 
-#include "parser.hxx"
+#include "parser.hpp"
 
 // User implementation prologue.
 
-#line 51 "parser.cxx" // lalr1.cc:414
+#line 51 "parser.cpp" // lalr1.cc:414
 // Unqualified %code blocks.
-#line 88 "parser.y" // lalr1.cc:415
-
-    #include <iostream>     // cerr, endl
-    #include <utility>      // move
-    #include <string>
-    #include <sstream>
+#line 87 "parser.y" // lalr1.cc:415
 
     #include "scanner.h"
 
     #undef yylex
     #define yylex scanner->lex
 
-#line 65 "parser.cxx" // lalr1.cc:415
+#line 60 "parser.cpp" // lalr1.cc:415
 
 
 #ifndef YY_
@@ -147,7 +142,7 @@
 
 
 namespace yy {
-#line 151 "parser.cxx" // lalr1.cc:481
+#line 146 "parser.cpp" // lalr1.cc:481
 
   /* Return YYSTR after stripping away unnecessary quotes and
      backslashes, so that it's suitable for yyerror.  The heuristic is
@@ -263,7 +258,7 @@ namespace yy {
 
       case 5: // "string"
       case 6: // "identifier"
-        value.copy< std::string > (other.value);
+        value.copy< tinystl::string > (other.value);
         break;
 
       default:
@@ -319,7 +314,7 @@ namespace yy {
 
       case 5: // "string"
       case 6: // "identifier"
-        value.copy< std::string > (v);
+        value.copy< tinystl::string > (v);
         break;
 
       default:
@@ -366,7 +361,7 @@ namespace yy {
   {}
 
   template <typename Base>
-  parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::string v, const location_type& l)
+  parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const tinystl::string v, const location_type& l)
     : Base (t)
     , value (v)
     , location (l)
@@ -434,7 +429,7 @@ namespace yy {
 
       case 5: // "string"
       case 6: // "identifier"
-        value.template destroy< std::string > ();
+        value.template destroy< tinystl::string > ();
         break;
 
       default:
@@ -496,7 +491,7 @@ namespace yy {
 
       case 5: // "string"
       case 6: // "identifier"
-        value.move< std::string > (s.value);
+        value.move< tinystl::string > (s.value);
         break;
 
       default:
@@ -557,13 +552,13 @@ namespace yy {
   }
 
   parser::symbol_type
-  parser::make_STRING (const std::string& v, const location_type& l)
+  parser::make_STRING (const tinystl::string& v, const location_type& l)
   {
     return symbol_type (token::T_STRING, v, l);
   }
 
   parser::symbol_type
-  parser::make_IDENTIFIER (const std::string& v, const location_type& l)
+  parser::make_IDENTIFIER (const tinystl::string& v, const location_type& l)
   {
     return symbol_type (token::T_IDENTIFIER, v, l);
   }
@@ -771,7 +766,7 @@ namespace yy {
 
       case 5: // "string"
       case 6: // "identifier"
-        value.copy< std::string > (that.value);
+        value.copy< tinystl::string > (that.value);
         break;
 
       default:
@@ -823,7 +818,7 @@ namespace yy {
 
       case 5: // "string"
       case 6: // "identifier"
-        value.move< std::string > (that.value);
+        value.move< tinystl::string > (that.value);
         break;
 
       default:
@@ -878,7 +873,7 @@ namespace yy {
 
       case 5: // "string"
       case 6: // "identifier"
-        value.copy< std::string > (that.value);
+        value.copy< tinystl::string > (that.value);
         break;
 
       default:
@@ -1142,7 +1137,7 @@ namespace yy {
 
       case 5: // "string"
       case 6: // "identifier"
-        yylhs.value.build< std::string > ();
+        yylhs.value.build< tinystl::string > ();
         break;
 
       default:
@@ -1164,295 +1159,295 @@ namespace yy {
           switch (yyn)
             {
   case 8:
-#line 117 "parser.y" // lalr1.cc:856
+#line 111 "parser.y" // lalr1.cc:856
     { yylhs.value.as< binify::ast::Type > ()=binify::ast::Type::U8; }
-#line 1170 "parser.cxx" // lalr1.cc:856
+#line 1165 "parser.cpp" // lalr1.cc:856
     break;
 
   case 9:
-#line 118 "parser.y" // lalr1.cc:856
+#line 112 "parser.y" // lalr1.cc:856
     { yylhs.value.as< binify::ast::Type > ()=binify::ast::Type::U16; }
-#line 1176 "parser.cxx" // lalr1.cc:856
+#line 1171 "parser.cpp" // lalr1.cc:856
     break;
 
   case 10:
-#line 119 "parser.y" // lalr1.cc:856
+#line 113 "parser.y" // lalr1.cc:856
     { yylhs.value.as< binify::ast::Type > ()=binify::ast::Type::U32; }
-#line 1182 "parser.cxx" // lalr1.cc:856
+#line 1177 "parser.cpp" // lalr1.cc:856
     break;
 
   case 11:
-#line 120 "parser.y" // lalr1.cc:856
+#line 114 "parser.y" // lalr1.cc:856
     { yylhs.value.as< binify::ast::Type > ()=binify::ast::Type::U64; }
-#line 1188 "parser.cxx" // lalr1.cc:856
+#line 1183 "parser.cpp" // lalr1.cc:856
     break;
 
   case 12:
-#line 121 "parser.y" // lalr1.cc:856
+#line 115 "parser.y" // lalr1.cc:856
     { yylhs.value.as< binify::ast::Type > ()=binify::ast::Type::S8; }
-#line 1194 "parser.cxx" // lalr1.cc:856
+#line 1189 "parser.cpp" // lalr1.cc:856
     break;
 
   case 13:
-#line 122 "parser.y" // lalr1.cc:856
+#line 116 "parser.y" // lalr1.cc:856
     { yylhs.value.as< binify::ast::Type > ()=binify::ast::Type::S16; }
-#line 1200 "parser.cxx" // lalr1.cc:856
+#line 1195 "parser.cpp" // lalr1.cc:856
     break;
 
   case 14:
-#line 123 "parser.y" // lalr1.cc:856
+#line 117 "parser.y" // lalr1.cc:856
     { yylhs.value.as< binify::ast::Type > ()=binify::ast::Type::S32; }
-#line 1206 "parser.cxx" // lalr1.cc:856
+#line 1201 "parser.cpp" // lalr1.cc:856
     break;
 
   case 15:
-#line 124 "parser.y" // lalr1.cc:856
+#line 118 "parser.y" // lalr1.cc:856
     { yylhs.value.as< binify::ast::Type > ()=binify::ast::Type::S64; }
-#line 1212 "parser.cxx" // lalr1.cc:856
+#line 1207 "parser.cpp" // lalr1.cc:856
     break;
 
   case 16:
-#line 125 "parser.y" // lalr1.cc:856
+#line 119 "parser.y" // lalr1.cc:856
     { yylhs.value.as< binify::ast::Type > ()=binify::ast::Type::Float; }
-#line 1218 "parser.cxx" // lalr1.cc:856
+#line 1213 "parser.cpp" // lalr1.cc:856
     break;
 
   case 17:
-#line 126 "parser.y" // lalr1.cc:856
+#line 120 "parser.y" // lalr1.cc:856
     { yylhs.value.as< binify::ast::Type > ()=binify::ast::Type::Double; }
-#line 1224 "parser.cxx" // lalr1.cc:856
+#line 1219 "parser.cpp" // lalr1.cc:856
     break;
 
   case 18:
-#line 129 "parser.y" // lalr1.cc:856
+#line 123 "parser.y" // lalr1.cc:856
     { cb->U8( yystack_[0].value.as< int64_t > () ); }
-#line 1230 "parser.cxx" // lalr1.cc:856
+#line 1225 "parser.cpp" // lalr1.cc:856
     break;
 
   case 19:
-#line 130 "parser.y" // lalr1.cc:856
+#line 124 "parser.y" // lalr1.cc:856
     { cb->U16( yystack_[0].value.as< int64_t > () ); }
-#line 1236 "parser.cxx" // lalr1.cc:856
+#line 1231 "parser.cpp" // lalr1.cc:856
     break;
 
   case 20:
-#line 131 "parser.y" // lalr1.cc:856
+#line 125 "parser.y" // lalr1.cc:856
     { cb->U32( yystack_[0].value.as< int64_t > () ); }
-#line 1242 "parser.cxx" // lalr1.cc:856
+#line 1237 "parser.cpp" // lalr1.cc:856
     break;
 
   case 21:
-#line 132 "parser.y" // lalr1.cc:856
+#line 126 "parser.y" // lalr1.cc:856
     { cb->U64( yystack_[0].value.as< int64_t > () ); }
-#line 1248 "parser.cxx" // lalr1.cc:856
+#line 1243 "parser.cpp" // lalr1.cc:856
     break;
 
   case 22:
-#line 133 "parser.y" // lalr1.cc:856
+#line 127 "parser.y" // lalr1.cc:856
     { cb->S8( yystack_[0].value.as< int64_t > () ); }
-#line 1254 "parser.cxx" // lalr1.cc:856
+#line 1249 "parser.cpp" // lalr1.cc:856
     break;
 
   case 23:
-#line 134 "parser.y" // lalr1.cc:856
+#line 128 "parser.y" // lalr1.cc:856
     { cb->S16( yystack_[0].value.as< int64_t > () ); }
-#line 1260 "parser.cxx" // lalr1.cc:856
+#line 1255 "parser.cpp" // lalr1.cc:856
     break;
 
   case 24:
-#line 135 "parser.y" // lalr1.cc:856
+#line 129 "parser.y" // lalr1.cc:856
     { cb->S32( yystack_[0].value.as< int64_t > () ); }
-#line 1266 "parser.cxx" // lalr1.cc:856
+#line 1261 "parser.cpp" // lalr1.cc:856
     break;
 
   case 25:
-#line 136 "parser.y" // lalr1.cc:856
+#line 130 "parser.y" // lalr1.cc:856
     { cb->S64( yystack_[0].value.as< int64_t > () ); }
-#line 1272 "parser.cxx" // lalr1.cc:856
+#line 1267 "parser.cpp" // lalr1.cc:856
     break;
 
   case 26:
-#line 137 "parser.y" // lalr1.cc:856
+#line 131 "parser.y" // lalr1.cc:856
     { cb->Float( yystack_[0].value.as< double > () ); }
-#line 1278 "parser.cxx" // lalr1.cc:856
+#line 1273 "parser.cpp" // lalr1.cc:856
     break;
 
   case 27:
-#line 138 "parser.y" // lalr1.cc:856
+#line 132 "parser.y" // lalr1.cc:856
     { cb->Double( yystack_[0].value.as< double > () ); }
-#line 1284 "parser.cxx" // lalr1.cc:856
+#line 1279 "parser.cpp" // lalr1.cc:856
     break;
 
   case 28:
-#line 139 "parser.y" // lalr1.cc:856
+#line 133 "parser.y" // lalr1.cc:856
     { cb->IntDefault( yystack_[0].value.as< int64_t > () ); }
-#line 1290 "parser.cxx" // lalr1.cc:856
+#line 1285 "parser.cpp" // lalr1.cc:856
     break;
 
   case 29:
-#line 140 "parser.y" // lalr1.cc:856
+#line 134 "parser.y" // lalr1.cc:856
     { cb->FloatDefault( yystack_[0].value.as< double > () ); }
-#line 1296 "parser.cxx" // lalr1.cc:856
+#line 1291 "parser.cpp" // lalr1.cc:856
     break;
 
   case 30:
-#line 141 "parser.y" // lalr1.cc:856
-    { cb->String( yystack_[0].value.as< std::string > () ); }
-#line 1302 "parser.cxx" // lalr1.cc:856
+#line 135 "parser.y" // lalr1.cc:856
+    { cb->String( yystack_[0].value.as< tinystl::string > () ); }
+#line 1297 "parser.cpp" // lalr1.cc:856
     break;
 
   case 31:
-#line 142 "parser.y" // lalr1.cc:856
+#line 136 "parser.y" // lalr1.cc:856
     { cb->Align( yystack_[0].value.as< int64_t > () ); }
-#line 1308 "parser.cxx" // lalr1.cc:856
+#line 1303 "parser.cpp" // lalr1.cc:856
     break;
 
   case 32:
-#line 143 "parser.y" // lalr1.cc:856
+#line 137 "parser.y" // lalr1.cc:856
     { cb->Blank( yystack_[0].value.as< int64_t > () ); }
-#line 1314 "parser.cxx" // lalr1.cc:856
+#line 1309 "parser.cpp" // lalr1.cc:856
     break;
 
   case 33:
-#line 144 "parser.y" // lalr1.cc:856
+#line 138 "parser.y" // lalr1.cc:856
     { cb->AllowNan( yystack_[0].value.as< int64_t > () ); }
-#line 1320 "parser.cxx" // lalr1.cc:856
+#line 1315 "parser.cpp" // lalr1.cc:856
     break;
 
   case 34:
-#line 145 "parser.y" // lalr1.cc:856
+#line 139 "parser.y" // lalr1.cc:856
     { cb->AllowInfinity( yystack_[0].value.as< int64_t > () ); }
-#line 1326 "parser.cxx" // lalr1.cc:856
+#line 1321 "parser.cpp" // lalr1.cc:856
     break;
 
   case 35:
-#line 146 "parser.y" // lalr1.cc:856
+#line 140 "parser.y" // lalr1.cc:856
     { cb->SetAddressLen( yystack_[0].value.as< int64_t > () ); }
-#line 1332 "parser.cxx" // lalr1.cc:856
+#line 1327 "parser.cpp" // lalr1.cc:856
     break;
 
   case 36:
-#line 147 "parser.y" // lalr1.cc:856
+#line 141 "parser.y" // lalr1.cc:856
     { cb->Fixup( yystack_[0].value.as< int64_t > () ); }
-#line 1338 "parser.cxx" // lalr1.cc:856
+#line 1333 "parser.cpp" // lalr1.cc:856
     break;
 
   case 37:
-#line 148 "parser.y" // lalr1.cc:856
+#line 142 "parser.y" // lalr1.cc:856
     { cb->SetDefaultType( yystack_[0].value.as< binify::ast::Type > () ); }
-#line 1344 "parser.cxx" // lalr1.cc:856
+#line 1339 "parser.cpp" // lalr1.cc:856
     break;
 
   case 38:
-#line 149 "parser.y" // lalr1.cc:856
+#line 143 "parser.y" // lalr1.cc:856
     { cb->SetByteOrder( binify::ast::Statement::LittleEndian ); }
-#line 1350 "parser.cxx" // lalr1.cc:856
+#line 1345 "parser.cpp" // lalr1.cc:856
     break;
 
   case 39:
-#line 150 "parser.y" // lalr1.cc:856
+#line 144 "parser.y" // lalr1.cc:856
     { cb->SetByteOrder( binify::ast::Statement::BigEndian ); }
-#line 1356 "parser.cxx" // lalr1.cc:856
+#line 1351 "parser.cpp" // lalr1.cc:856
     break;
 
   case 40:
-#line 151 "parser.y" // lalr1.cc:856
-    { cb->SetPass0Symbol( yystack_[2].value.as< std::string > (), yystack_[0].value.as< int64_t > () ); }
-#line 1362 "parser.cxx" // lalr1.cc:856
+#line 145 "parser.y" // lalr1.cc:856
+    { cb->SetPass0Symbol( yystack_[2].value.as< tinystl::string > (), yystack_[0].value.as< int64_t > () ); }
+#line 1357 "parser.cpp" // lalr1.cc:856
     break;
 
   case 41:
-#line 152 "parser.y" // lalr1.cc:856
-    { cb->SetSymbolToOffset( yystack_[1].value.as< std::string > () ); }
-#line 1368 "parser.cxx" // lalr1.cc:856
+#line 146 "parser.y" // lalr1.cc:856
+    { cb->SetSymbolToOffset( yystack_[1].value.as< tinystl::string > () ); }
+#line 1363 "parser.cpp" // lalr1.cc:856
     break;
 
   case 42:
-#line 153 "parser.y" // lalr1.cc:856
-    { cb->SetSymbol( yystack_[2].value.as< std::string > (), yystack_[0].value.as< int64_t > () ); }
-#line 1374 "parser.cxx" // lalr1.cc:856
+#line 147 "parser.y" // lalr1.cc:856
+    { cb->SetSymbol( yystack_[2].value.as< tinystl::string > (), yystack_[0].value.as< int64_t > () ); }
+#line 1369 "parser.cpp" // lalr1.cc:856
     break;
 
   case 43:
-#line 157 "parser.y" // lalr1.cc:856
+#line 151 "parser.y" // lalr1.cc:856
     { yylhs.value.as< int64_t > ()=yystack_[0].value.as< int64_t > (); }
-#line 1380 "parser.cxx" // lalr1.cc:856
+#line 1375 "parser.cpp" // lalr1.cc:856
     break;
 
   case 44:
-#line 158 "parser.y" // lalr1.cc:856
+#line 152 "parser.y" // lalr1.cc:856
     { yylhs.value.as< int64_t > ()=yystack_[2].value.as< int64_t > ()-yystack_[0].value.as< int64_t > (); }
-#line 1386 "parser.cxx" // lalr1.cc:856
+#line 1381 "parser.cpp" // lalr1.cc:856
     break;
 
   case 45:
-#line 159 "parser.y" // lalr1.cc:856
+#line 153 "parser.y" // lalr1.cc:856
     { yylhs.value.as< int64_t > ()=yystack_[2].value.as< int64_t > ()+yystack_[0].value.as< int64_t > (); }
-#line 1392 "parser.cxx" // lalr1.cc:856
+#line 1387 "parser.cpp" // lalr1.cc:856
     break;
 
   case 46:
-#line 160 "parser.y" // lalr1.cc:856
+#line 154 "parser.y" // lalr1.cc:856
     { yylhs.value.as< int64_t > ()=yystack_[1].value.as< int64_t > (); }
-#line 1398 "parser.cxx" // lalr1.cc:856
+#line 1393 "parser.cpp" // lalr1.cc:856
     break;
 
   case 47:
-#line 161 "parser.y" // lalr1.cc:856
+#line 155 "parser.y" // lalr1.cc:856
     { yylhs.value.as< int64_t > ()=yystack_[2].value.as< int64_t > ()|yystack_[0].value.as< int64_t > (); }
-#line 1404 "parser.cxx" // lalr1.cc:856
+#line 1399 "parser.cpp" // lalr1.cc:856
     break;
 
   case 48:
-#line 162 "parser.y" // lalr1.cc:856
-    { yylhs.value.as< int64_t > () = cb->LookupSymbol( yystack_[0].value.as< std::string > () ); }
-#line 1410 "parser.cxx" // lalr1.cc:856
+#line 156 "parser.y" // lalr1.cc:856
+    { yylhs.value.as< int64_t > () = cb->LookupSymbol( yystack_[0].value.as< tinystl::string > () ); }
+#line 1405 "parser.cpp" // lalr1.cc:856
     break;
 
   case 49:
-#line 165 "parser.y" // lalr1.cc:856
+#line 159 "parser.y" // lalr1.cc:856
     { yylhs.value.as< double > ()=yystack_[0].value.as< double > (); }
-#line 1416 "parser.cxx" // lalr1.cc:856
+#line 1411 "parser.cpp" // lalr1.cc:856
     break;
 
   case 50:
-#line 166 "parser.y" // lalr1.cc:856
+#line 160 "parser.y" // lalr1.cc:856
     { yylhs.value.as< double > ()=yystack_[2].value.as< double > ()+yystack_[0].value.as< double > (); }
-#line 1422 "parser.cxx" // lalr1.cc:856
+#line 1417 "parser.cpp" // lalr1.cc:856
     break;
 
   case 51:
-#line 167 "parser.y" // lalr1.cc:856
+#line 161 "parser.y" // lalr1.cc:856
     { yylhs.value.as< double > ()=yystack_[2].value.as< double > ()-yystack_[0].value.as< double > (); }
-#line 1428 "parser.cxx" // lalr1.cc:856
+#line 1423 "parser.cpp" // lalr1.cc:856
     break;
 
   case 52:
-#line 168 "parser.y" // lalr1.cc:856
+#line 162 "parser.y" // lalr1.cc:856
     { yylhs.value.as< double > ()=yystack_[2].value.as< double > ()*yystack_[0].value.as< double > (); }
-#line 1434 "parser.cxx" // lalr1.cc:856
+#line 1429 "parser.cpp" // lalr1.cc:856
     break;
 
   case 53:
-#line 169 "parser.y" // lalr1.cc:856
+#line 163 "parser.y" // lalr1.cc:856
     { yylhs.value.as< double > ()=yystack_[2].value.as< double > ()/yystack_[0].value.as< double > (); }
-#line 1440 "parser.cxx" // lalr1.cc:856
+#line 1435 "parser.cpp" // lalr1.cc:856
     break;
 
   case 54:
-#line 170 "parser.y" // lalr1.cc:856
+#line 164 "parser.y" // lalr1.cc:856
     { yylhs.value.as< double > ()=-yystack_[0].value.as< double > (); }
-#line 1446 "parser.cxx" // lalr1.cc:856
+#line 1441 "parser.cpp" // lalr1.cc:856
     break;
 
   case 55:
-#line 171 "parser.y" // lalr1.cc:856
+#line 165 "parser.y" // lalr1.cc:856
     { yylhs.value.as< double > ()=yystack_[1].value.as< double > (); }
-#line 1452 "parser.cxx" // lalr1.cc:856
+#line 1447 "parser.cpp" // lalr1.cc:856
     break;
 
 
-#line 1456 "parser.cxx" // lalr1.cc:856
+#line 1451 "parser.cpp" // lalr1.cc:856
             default:
               break;
             }
@@ -1855,12 +1850,12 @@ namespace yy {
   const unsigned char
   parser::yyrline_[] =
   {
-       0,   103,   103,   104,   107,   108,   112,   113,   117,   118,
-     119,   120,   121,   122,   123,   124,   125,   126,   129,   130,
-     131,   132,   133,   134,   135,   136,   137,   138,   139,   140,
-     141,   142,   143,   144,   145,   146,   147,   148,   149,   150,
-     151,   152,   153,   157,   158,   159,   160,   161,   162,   165,
-     166,   167,   168,   169,   170,   171
+       0,    97,    97,    98,   101,   102,   106,   107,   111,   112,
+     113,   114,   115,   116,   117,   118,   119,   120,   123,   124,
+     125,   126,   127,   128,   129,   130,   131,   132,   133,   134,
+     135,   136,   137,   138,   139,   140,   141,   142,   143,   144,
+     145,   146,   147,   151,   152,   153,   154,   155,   156,   159,
+     160,   161,   162,   163,   164,   165
   };
 
   // Print the state stack on the debug stream.
@@ -1943,8 +1938,8 @@ namespace yy {
 
 
 } // yy
-#line 1947 "parser.cxx" // lalr1.cc:1164
-#line 177 "parser.y" // lalr1.cc:1165
+#line 1942 "parser.cpp" // lalr1.cc:1164
+#line 171 "parser.y" // lalr1.cc:1165
 
 
 void yy::parser::error(const parser::location_type& l, const std::string& m)

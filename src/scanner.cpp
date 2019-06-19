@@ -1,6 +1,6 @@
-#line 1 "scanner.cxx"
+#line 1 "scanner.cpp"
 
-#line 3 "scanner.cxx"
+#line 3 "scanner.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -365,7 +365,7 @@ typedef flex_uint8_t YY_CHAR;
 
 #define yytext_ptr yytext
 
-#include "FlexLexer.h"
+#include <FlexLexer.h>
 
 int yyFlexLexer::yywrap() { return 1; }
 
@@ -576,10 +576,10 @@ static const flex_int16_t yy_chk[305] =
 
 static const flex_int16_t yy_rule_linenum[35] =
     {   0,
-       51,   52,   53,   54,   55,   56,   57,   59,   60,   61,
-       62,   63,   64,   65,   66,   67,   68,   70,   71,   72,
-       73,   74,   75,   76,   77,   78,   80,   81,   82,   83,
-       84,   87,   88,   90
+       49,   50,   51,   52,   53,   54,   55,   57,   58,   59,
+       60,   61,   62,   63,   64,   65,   66,   68,   69,   70,
+       71,   72,   73,   74,   75,   76,   78,   79,   80,   81,
+       82,   85,   86,   88
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -594,11 +594,9 @@ static const flex_int16_t yy_rule_linenum[35] =
 #define YY_NO_INPUT 1
 #line 11 "lexer.l"
     #define YY_NO_UNISTD_H
-    #include <stdexcept>
-    #include <cstdlib>
-    #include <string>
+    #include "al2o3_tinystl/string.hpp"
     #include "ast.h"
-    #include "parser.hxx"
+    #include "parser.hpp"
     #include "scanner.h"
 
     // utility macros to simplify the actions
@@ -606,21 +604,21 @@ static const flex_int16_t yy_rule_linenum[35] =
                     yylval->build<type>(val);           \
                     return yy::parser::token::T_##tok;
 
-    #define YY_TXT                  std::string(yytext, yyleng)
-    #define YY_FNUM					std::stod(std::string(yytext, yyleng))
-    #define YY_INUM(base)           std::stoull(std::string(yytext, yyleng), 0, base)    
+    #define YY_TXT                  tinystl::string(yytext, yyleng)
+    #define YY_FNUM					std::stod(tinystl::string(yytext, yyleng).c_str())
+    #define YY_INUM(base)           std::stoull(tinystl::string(yytext, yyleng).c_str(), 0, base)
 
     #define INT_TOKEN(base)     	YIELD_TOKEN(INTNUM, YY_INUM(base), int64_t)
     #define FLT_TOKEN()          	YIELD_TOKEN(FPNUM, YY_FNUM, double)
     #define TYPE_TOKEN(val)         YIELD_TOKEN(val, binify::ast::Type:: val, binify::ast::Type)
     #define STATEMENT_TOKEN(val)    YIELD_TOKEN(val, binify::ast::Statement:: val, binify::ast::Statement)
-    #define STR_TOKEN(tok)          YIELD_TOKEN(tok, YY_TXT, std::string)
+    #define STR_TOKEN(tok)          YIELD_TOKEN(tok, YY_TXT, tinystl::string)
 
     // before executing an action, set the length of the location from
     // the length of the matched pattern:
     #define YY_USER_ACTION          yylloc->columns(yyleng);
-#line 622 "scanner.cxx"
-#line 623 "scanner.cxx"
+#line 620 "scanner.cpp"
+#line 621 "scanner.cpp"
 
 #define INITIAL 0
 
@@ -812,16 +810,16 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 43 "lexer.l"
+#line 41 "lexer.l"
 
 
-#line 46 "lexer.l"
+#line 44 "lexer.l"
 	// Code run each time yylex is called.
     yylloc->step();
 
 
 
-#line 824 "scanner.cxx"
+#line 822 "scanner.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -898,181 +896,181 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 51 "lexer.l"
+#line 49 "lexer.l"
 INT_TOKEN(10)
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 52 "lexer.l"
+#line 50 "lexer.l"
 INT_TOKEN(16)
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 53 "lexer.l"
+#line 51 "lexer.l"
 INT_TOKEN(10)
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 54 "lexer.l"
+#line 52 "lexer.l"
 INT_TOKEN(16)
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 55 "lexer.l"
+#line 53 "lexer.l"
 INT_TOKEN(2)
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 56 "lexer.l"
+#line 54 "lexer.l"
 FLT_TOKEN()
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 57 "lexer.l"
+#line 55 "lexer.l"
 FLT_TOKEN()
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 59 "lexer.l"
+#line 57 "lexer.l"
 TYPE_TOKEN(U8)
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 60 "lexer.l"
+#line 58 "lexer.l"
 TYPE_TOKEN(U16)
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 61 "lexer.l"
+#line 59 "lexer.l"
 TYPE_TOKEN(U32)
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 62 "lexer.l"
+#line 60 "lexer.l"
 TYPE_TOKEN(U64)
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 63 "lexer.l"
+#line 61 "lexer.l"
 TYPE_TOKEN(S8)
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 64 "lexer.l"
+#line 62 "lexer.l"
 TYPE_TOKEN(S16)
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 65 "lexer.l"
+#line 63 "lexer.l"
 TYPE_TOKEN(S32)
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 66 "lexer.l"
+#line 64 "lexer.l"
 TYPE_TOKEN(S64)
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 67 "lexer.l"
+#line 65 "lexer.l"
 TYPE_TOKEN(Float)
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 68 "lexer.l"
+#line 66 "lexer.l"
 TYPE_TOKEN(Double)
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 70 "lexer.l"
+#line 68 "lexer.l"
 STATEMENT_TOKEN(Align)
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 71 "lexer.l"
+#line 69 "lexer.l"
 STATEMENT_TOKEN(Type)
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 72 "lexer.l"
+#line 70 "lexer.l"
 STATEMENT_TOKEN(LittleEndian)
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 73 "lexer.l"
+#line 71 "lexer.l"
 STATEMENT_TOKEN(BigEndian)
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 74 "lexer.l"
+#line 72 "lexer.l"
 STATEMENT_TOKEN(Blank)
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 75 "lexer.l"
+#line 73 "lexer.l"
 STATEMENT_TOKEN(AddressLen)
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 76 "lexer.l"
+#line 74 "lexer.l"
 STATEMENT_TOKEN(Fixup)
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 77 "lexer.l"
+#line 75 "lexer.l"
 STATEMENT_TOKEN(AllowNan)
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 78 "lexer.l"
+#line 76 "lexer.l"
 STATEMENT_TOKEN(AllowInfinity)
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 80 "lexer.l"
+#line 78 "lexer.l"
 {/* eat comments */}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 81 "lexer.l"
+#line 79 "lexer.l"
 {/* eat comments */}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 82 "lexer.l"
+#line 80 "lexer.l"
 yylloc->step();
 	YY_BREAK
 case 30:
 /* rule 30 can match eol */
 YY_RULE_SETUP
-#line 83 "lexer.l"
+#line 81 "lexer.l"
 { yylloc->lines(yyleng);  yylloc->step(); return '\n'; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 84 "lexer.l"
+#line 82 "lexer.l"
 { yylloc->step(); return yytext[0]; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 87 "lexer.l"
+#line 85 "lexer.l"
 STR_TOKEN(STRING)
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 88 "lexer.l"
+#line 86 "lexer.l"
 STR_TOKEN(IDENTIFIER)
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 90 "lexer.l"
+#line 88 "lexer.l"
 { throw yy::parser::syntax_error(*yylloc, "invalid character: " + std::string(yytext)); }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 92 "lexer.l"
+#line 90 "lexer.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1075 "scanner.cxx"
+#line 1073 "scanner.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2191,7 +2189,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 92 "lexer.l"
+#line 90 "lexer.l"
 
 
 yy::scanner::scanner(std::istream* in, std::ostream* out)

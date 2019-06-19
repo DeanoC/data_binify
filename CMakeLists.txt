@@ -14,28 +14,37 @@ project(${LibName})
 
 set(Interface
 		binify.h
+		writehelper.hpp
 		)
 
 set(Src
 		ast.h
 		binify.h
 		binify.cpp
+		writehelper.cpp
+
 		FlexLexer.h
-		parser.cxx
-		parser.hxx
-		scanner.cxx
+		parser.cpp
+		parser.hpp
+		scanner.cpp
+		scanner.hpp
 		scanner.h
-		scanner.hxx)
+)
 
 set(Deps
 		al2o3_platform
 		al2o3_cmath
+		al2o3_cadt
+		al2o3_vfile
+		al2o3_lz4
+		fmt
 		)
 ADD_LIB(${LibName} "${Interface}" "${Src}" "${Deps}")
 
 set( Tests
 		runner.cpp
 		test_binify.cpp
+		test_writehelper.cpp
 		)
 set( TestDeps
 		utils_simple_logmanager

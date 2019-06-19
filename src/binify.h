@@ -1,10 +1,9 @@
 #ifndef BINIFY_BINIFY_H
 #define BINIFY_BINIFY_H
-#include <cassert>
-#include <cstdint>
-#include <vector>
-#include <map>
-#include <sstream>
+
+#include "al2O3_platform/platform.h"
+#include "al2O3_tinystl/unordered_map.hpp"
+#include "al2O3_tinystl/string.hpp"
 #include "scanner.h"
 
 namespace binify
@@ -13,16 +12,14 @@ namespace binify
 class Binify : public ParserOutput
 {
 public:
-	Binify();
+	bool parse(tinystl::string const& txt, std::ostream* out_);
 
-	bool parse(std::string const& txt, std::ostream* out_);
-
-	std::string getLog() const { return log.str(); }
+	tinystl::string const& getLog() const { return log; }
 
 	// ParserOutput implementation
 	void IntDefault( int64_t i ) override;
 	void FloatDefault( double f ) override;
-	void String( std::string str ) override;
+	void String( tinystl::string str ) override;
 	void Float( double d ) override;
 	void Double( double d ) override;
 	void U8( uint64_t i ) override;
@@ -43,11 +40,11 @@ public:
 	void SetAddressLen( int64_t bits ) override;
 	void Fixup( uint64_t i ) override;
 
-	void SetSymbolToOffset( std::string name ) override;
-	void SetPass0Symbol( std::string name, int64_t i ) override;
-	void SetSymbol( std::string name, int64_t i ) override;
+	void SetSymbolToOffset( tinystl::string name ) override;
+	void SetPass0Symbol( tinystl::string name, int64_t i ) override;
+	void SetSymbol( tinystl::string name, int64_t i ) override;
 
-	int64_t LookupSymbol( std::string name) override;
+	int64_t LookupSymbol( tinystl::string name) override;
 
 private:
 	std::ostream* out;
@@ -55,7 +52,7 @@ private:
 	void byteOut( uint8_t b );
 	void valueOut( const void* value, int size );
 
-	using SymbolTable = std::map< std::string, int64_t >;
+	using SymbolTable = tinystl::unordered_map< tinystl::string, int64_t >;
 
 	int64_t offset = 0;
 	int pass = 0;
@@ -69,7 +66,7 @@ private:
 	int64_t addressLen = 64;
 
 	bool debugMode = false;
-	std::ostringstream log;
+	tinystl::string log;
 };
 }
 

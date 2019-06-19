@@ -1,7 +1,7 @@
 /* binify */
 /* C++ parser interface */
-%output  "parser.cxx"
-%defines "parser.hxx"
+%output  "parser.cpp"
+%defines "parser.hpp"
 
 %skeleton "lalr1.cc"
 %require "3.0"
@@ -22,8 +22,8 @@
 %token END     			0   		"end of file"
 %token <int64_t> 		INTNUM 		"int64"
 %token <double>			FPNUM		"double"
-%token <std::string> 	STRING 		"string"
-%token <std::string> 	IDENTIFIER 	"identifier"
+%token <tinystl::string> 	STRING 		"string"
+%token <tinystl::string> 	IDENTIFIER 	"identifier"
 
 %token <binify::ast::Statement> Align Blank LittleEndian BigEndian AddressLen
                                 Fixup Type AllowNan AllowInfinity
@@ -41,8 +41,7 @@
 %type <binify::ast::Type> type
 
 %code requires {
-    #include <stdexcept>
-    #include <string>
+    #include "al2o3_tinystl/string.hpp"
 
     #include "ast.h"
     #include "location.hh"
@@ -56,7 +55,7 @@
     struct ParserOutput {
     	virtual void IntDefault( int64_t i ) = 0;
 		virtual void FloatDefault( double f ) = 0;
-		virtual void String( std::string str ) = 0;
+		virtual void String( tinystl::string str ) = 0;
 		virtual void Float( double d ) = 0;
 		virtual void Double( double d ) = 0;
 		virtual void U8( uint64_t i ) = 0;
@@ -75,10 +74,10 @@
 		virtual void Blank( int64_t count ) = 0;
 		virtual void SetAddressLen( int64_t bits ) = 0;
 		virtual void Fixup(uint64_t i) = 0;
-		virtual void SetSymbolToOffset( std::string name ) = 0;
-		virtual void SetSymbol( std::string name, int64_t i ) = 0;
-		virtual void SetPass0Symbol( std::string name, int64_t i ) = 0;
-		virtual int64_t LookupSymbol( std::string name ) = 0;
+		virtual void SetSymbolToOffset( tinystl::string name ) = 0;
+		virtual void SetSymbol( tinystl::string name, int64_t i ) = 0;
+		virtual void SetPass0Symbol( tinystl::string name, int64_t i ) = 0;
+		virtual int64_t LookupSymbol( tinystl::string name ) = 0;
     };
 	} // end namespace 
 
@@ -86,11 +85,6 @@
 
 /* inserted near top of source file */
 %code {
-    #include <iostream>     // cerr, endl
-    #include <utility>      // move
-    #include <string>
-    #include <sstream>
-
     #include "scanner.h"
 
     #undef yylex
@@ -136,20 +130,20 @@ item:	'(' U8 ')' intexp		{ cb->U8( $4 ); }
 		| '(' S64 ')' intexp	{ cb->S64( $4 ); }
 		| '(' Float ')' fpexp	{ cb->Float( $4 ); }
 		| '(' Double ')' fpexp	{ cb->Double( $4 ); }		
-		| intexp				{ cb->IntDefault( $1 ); }
-		| fpexp					{ cb->FloatDefault( $1 ); }
-		| STRING				{ cb->String( $1 ); }
-		| Align intexp			{ cb->Align( $2 ); }
-		| Blank intexp			{ cb->Blank( $2 ); }
-		| AllowNan intexp		{ cb->AllowNan( $2 ); }
+		| intexp		{ cb->IntDefault( $1 ); }
+		| fpexp			{ cb->FloatDefault( $1 ); }
+		| STRING		{ cb->String( $1 ); }
+		| Align intexp		{ cb->Align( $2 ); }
+		| Blank intexp		{ cb->Blank( $2 ); }
+		| AllowNan intexp	{ cb->AllowNan( $2 ); }
 		| AllowInfinity intexp	{ cb->AllowInfinity( $2 ); }
-		| AddressLen intexp		{ cb->SetAddressLen( $2 ); }
+		| AddressLen intexp	{ cb->SetAddressLen( $2 ); }
 		| Fixup intexp          { cb->Fixup( $2 ); }
-		| Type type				{ cb->SetDefaultType( $2 ); }
-		| LittleEndian			{ cb->SetByteOrder( binify::ast::Statement::LittleEndian ); }
-		| BigEndian				{ cb->SetByteOrder( binify::ast::Statement::BigEndian ); }
-        | '*' IDENTIFIER '*' intexp { cb->SetPass0Symbol( $2, $4 ); }
-		| IDENTIFIER ':'		{ cb->SetSymbolToOffset( $1 ); }
+		| Type type		{ cb->SetDefaultType( $2 ); }
+		| LittleEndian		{ cb->SetByteOrder( binify::ast::Statement::LittleEndian ); }
+		| BigEndian		{ cb->SetByteOrder( binify::ast::Statement::BigEndian ); }
+	        | '*' IDENTIFIER '*' intexp { cb->SetPass0Symbol( $2, $4 ); }
+		| IDENTIFIER ':'	{ cb->SetSymbolToOffset( $1 ); }
 		| IDENTIFIER '=' intexp { cb->SetSymbol( $1, $3 ); }
 
 ;

@@ -31,19 +31,18 @@
 // version 2.2 of Bison.
 
 /**
- ** \file parser.hxx
+ ** \file parser.hpp
  ** Define the yy::parser class.
  */
 
 // C++ LALR(1) parser skeleton written by Akim Demaille.
 
-#ifndef YY_YY_PARSER_HXX_INCLUDED
-# define YY_YY_PARSER_HXX_INCLUDED
+#ifndef YY_YY_PARSER_HPP_INCLUDED
+# define YY_YY_PARSER_HPP_INCLUDED
 // //                    "%code requires" blocks.
 #line 43 "parser.y" // lalr1.cc:379
 
-    #include <stdexcept>
-    #include <string>
+    #include "al2o3_tinystl/string.hpp"
 
     #include "ast.h"
     #include "location.hh"
@@ -57,7 +56,7 @@
     struct ParserOutput {
     	virtual void IntDefault( int64_t i ) = 0;
 		virtual void FloatDefault( double f ) = 0;
-		virtual void String( std::string str ) = 0;
+		virtual void String( tinystl::string str ) = 0;
 		virtual void Float( double d ) = 0;
 		virtual void Double( double d ) = 0;
 		virtual void U8( uint64_t i ) = 0;
@@ -76,15 +75,15 @@
 		virtual void Blank( int64_t count ) = 0;
 		virtual void SetAddressLen( int64_t bits ) = 0;
 		virtual void Fixup(uint64_t i) = 0;
-		virtual void SetSymbolToOffset( std::string name ) = 0;
-		virtual void SetSymbol( std::string name, int64_t i ) = 0;
-		virtual void SetPass0Symbol( std::string name, int64_t i ) = 0;
-		virtual int64_t LookupSymbol( std::string name ) = 0;
+		virtual void SetSymbolToOffset( tinystl::string name ) = 0;
+		virtual void SetSymbol( tinystl::string name, int64_t i ) = 0;
+		virtual void SetPass0Symbol( tinystl::string name, int64_t i ) = 0;
+		virtual int64_t LookupSymbol( tinystl::string name ) = 0;
     };
 	} // end namespace 
 
 
-#line 88 "parser.hxx" // lalr1.cc:379
+#line 87 "parser.hpp" // lalr1.cc:379
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -161,7 +160,7 @@
 
 
 namespace yy {
-#line 165 "parser.hxx" // lalr1.cc:379
+#line 164 "parser.hpp" // lalr1.cc:379
 
 
 
@@ -362,7 +361,7 @@ namespace yy {
 
       // "string"
       // "identifier"
-      char dummy5[sizeof(std::string)];
+      char dummy5[sizeof(tinystl::string)];
 };
 
     /// Symbol semantic values.
@@ -455,7 +454,7 @@ namespace yy {
 
   basic_symbol (typename Base::kind_type t, const int64_t v, const location_type& l);
 
-  basic_symbol (typename Base::kind_type t, const std::string v, const location_type& l);
+  basic_symbol (typename Base::kind_type t, const tinystl::string v, const location_type& l);
 
 
       /// Constructor for symbols with semantic value.
@@ -538,11 +537,11 @@ namespace yy {
 
     static inline
     symbol_type
-    make_STRING (const std::string& v, const location_type& l);
+    make_STRING (const tinystl::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_IDENTIFIER (const std::string& v, const location_type& l);
+    make_IDENTIFIER (const tinystl::string& v, const location_type& l);
 
     static inline
     symbol_type
@@ -848,9 +847,9 @@ namespace yy {
 
 
 } // yy
-#line 852 "parser.hxx" // lalr1.cc:379
+#line 851 "parser.hpp" // lalr1.cc:379
 
 
 
 
-#endif // !YY_YY_PARSER_HXX_INCLUDED
+#endif // !YY_YY_PARSER_HPP_INCLUDED

@@ -2,18 +2,17 @@
 #include "al2o3_catch2/catch2.hpp"
 #include "data_binify/binify.h"
 
-TEST_CASE( "Alloc and Free", "[Binify_C]" )
+TEST_CASE( "Alloc and Free", "[Binify]" )
 {
-	BINIFY_HANDLE const * handle = BINIFY_Alloc();
+	Binify_ContextHandle handle = Binify_Create("");
 	REQUIRE(handle);
-	BINIFY_Free(handle);
+	Binify_Destroy(handle);
 }
 
-TEST_CASE( "Empty Parse", "[Binify_C]" )
-{
-	BINIFY_HANDLE const * handle = BINIFY_Alloc();
-	int result = BINIFY_Parse(handle, "");
-	REQUIRE(result);
-	size_t size = BINIFY_BinarySize(handle);
+TEST_CASE( "Empty Parse", "[Binify]" ) {
+	Binify_ContextHandle handle = Binify_Create("");
+	REQUIRE(handle);
+	size_t size = Binify_BinarySize(handle);
 	REQUIRE(size == 0);
+	Binify_Destroy(handle);
 }

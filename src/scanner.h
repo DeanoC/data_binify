@@ -7,7 +7,7 @@
 
 # undef yyFlexLexer
 # include "FlexLexer.h"
-# include "parser.hxx"
+# include "parser.hpp"
 
 // Tell flex which function to define
 # undef YY_DECL

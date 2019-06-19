@@ -1,32 +1,27 @@
-#include <string>
-#include <sstream>
-#include <ostream>
-#include <vector>
-#include <map>
-#include <string>
-#include <cassert>
-#include <type_traits>
-#include <cmath>
+#include "al2o3_tinystl/string.hpp"
+#include "fmt/format.h"
 #include "binify.h"
+
+// still need these from system stl for now
+#include <istream>
+#include <ostream>
+#include <sstream>
+#include <stdexcept>
+
 
 // TODO determine this from compile PLATFORM
 #define BINIFY_LITTLE_ENDIAN
 
 namespace binify {
 
-Binify::Binify()
-{
-}
-
-
-bool Binify::parse( std::string const& txt_, std::ostream* out_ )
+bool Binify::parse( tinystl::string const& txt_, std::ostream* out_ )
 {
 	int result = 0;
 	out = out_;
 
 	try {
 		symbolTable.clear();
-		std::istringstream inp( txt_ );
+		std::istringstream inp( txt_.c_str() );
 		yy::scanner scanner(&inp);
 		yy::parser parser(&scanner, this);
 
@@ -49,30 +44,25 @@ bool Binify::parse( std::string const& txt_, std::ostream* out_ )
 		int len = 1 + e.location.end.column - col;
 		// TODO: The reported location is not entirely satisfying. Any
 		// chances for improvement?
-		std::ostringstream msg;
-		msg << e.what()
-			<< " in pass " << pass << " row " << e.location.end.line << " col " << col << ":\n\n";
-		std::string str = msg.str();
-		log << str;
+		log += fmt::format("{} in pass {} row {} col {}:",
+				e.what(), pass, e.location.end.line, col).c_str();
 	}
 	return true;
 }
 
-//#define BINIFY_BIG_ENDIAN
-
-void Binify::SetSymbolToOffset( std::string name )
+void Binify::SetSymbolToOffset( tinystl::string name )
 {
 	if( pass == 0 )
 	{
 		auto const it = symbolTable.find( name );
 		if( it != symbolTable.end() )
-			log << "WARNING: redefining '"<< name << "'" << std::endl;
+			log += fmt::format("WARNING: symbol  '{}' not found", name.c_str()).c_str();
 
 		SetPass0Symbol(name, offset);
 	}
 }
 
-void Binify::SetPass0Symbol( std::string name, int64_t i )
+void Binify::SetPass0Symbol( tinystl::string name, int64_t i )
 {
 	if( pass == 0 )
 	{
@@ -80,16 +70,16 @@ void Binify::SetPass0Symbol( std::string name, int64_t i )
 	}
 }
 
-void Binify::SetSymbol( std::string name, int64_t i )
+void Binify::SetSymbol( tinystl::string name, int64_t i )
 {
 	if( debugMode )
-		log << ": Set " << name << " = " << i << std::endl;;
+		log += fmt::format("{} = {}", name.c_str(), i).c_str();
 
 	symbolTable[name] = i;
 }
 
 
-int64_t Binify::LookupSymbol( std::string name )
+int64_t Binify::LookupSymbol( tinystl::string name )
 {
 //	printf("Lookup( %s )\n", name );
 
@@ -101,7 +91,7 @@ int64_t Binify::LookupSymbol( std::string name )
 			return 1; // ignore without error on first pass
 		}
 
-		log << "WARNING: symbol  '"<< name << "' not found" << std::endl;
+		log += fmt::format("WARNING: symbol  '{}' not found", name.c_str()).c_str();
 		return 0;
 	}
 
@@ -158,7 +148,7 @@ void Binify::SetDefaultType( ast::Type type )
 
 void Binify::SetByteOrder( ast::Statement order )
 {
-	assert(order == ast::Statement::BigEndian || order == ast::Statement::LittleEndian);
+	ASSERT(order == ast::Statement::BigEndian || order == ast::Statement::LittleEndian);
 	byteOrder = order;
 }
 void Binify::AllowNan( int64_t yesno )
@@ -188,17 +178,17 @@ void Binify::Blank( int64_t count )
 }
 
 
-void Binify::String( std::string sstr )
+void Binify::String( tinystl::string sstr )
 {
 	const char* p;
 	size_t i;
 
 	char const* str = sstr.c_str();
 
-	size_t len = std::strlen(str);
-	assert( len >= 2 );
-	assert( str[0] == '\"' );
-	assert( str[len-1] == '\"' );
+	size_t len = strlen(str);
+	ASSERT( len >= 2 );
+	ASSERT( str[0] == '\"' );
+	ASSERT( str[len-1] == '\"' );
 
 	p = str+1;
 	i=1;
@@ -208,7 +198,7 @@ void Binify::String( std::string sstr )
 		++i;
 		if( c == '\\' )
 		{
-			assert( i<len-1 );	// should be proper error check?
+			ASSERT( i<len-1 );	// should be proper error check?
 			++i;
 			switch( *p++ )
 			{
@@ -224,7 +214,7 @@ void Binify::String( std::string sstr )
 	}
 }
 
-template<typename T> T SafeConvert(std::ostream& log, uint64_t i)
+template<typename T> T SafeConvert(tinystl::string& log, uint64_t i)
 {
 	bool rangeErr = (std::is_signed<T>()) ?
 			   (i < std::numeric_limits<T>::max() || i > std::numeric_limits<T>::max()) :
@@ -232,7 +222,7 @@ template<typename T> T SafeConvert(std::ostream& log, uint64_t i)
 
 	if(rangeErr)
 	{
-		log << "WARNING: value out of range for " << typeid(T).name() << std::endl;
+		log += fmt::format("WARNING: value out of range for '{}'", typeid(T).name()).c_str();
 	}
 
 	return (T)i;
@@ -310,7 +300,7 @@ void Binify::Float( double d )
 
 	if(rangeErr)
 	{
-		log << "WARNING: value out of range for " << typeid(float).name() << std::endl;
+		log += "WARNING: value out of range for float\n";
 	}
 
 	auto j = (float)d;
@@ -360,7 +350,7 @@ void Binify::IntDefault( int64_t i )
 			U64( u.ui64 );
 			break;
 		}
-		default: assert(false && "IntDefault called from non integer type!");
+		default: ASSERT(false && "IntDefault called from non integer type!");
 	}
 }
 
@@ -379,13 +369,13 @@ void Binify::SetAddressLen( int64_t bits )
 {
 	if( (bits / 8) * 8 != bits)
 	{
-		log << "WARNING: Address Length set to non 8 bit value, ignoring" << std::endl;
+		log += "WARNING: Address Length set to non 8 bit value, ignoring\n";
 		return;
 	}
 
 	if( bits < 0)
 	{
-		log << "Address Length set to negative value, ignoring" << std::endl;
+		log += "Address Length set to negative value, ignoring\n";
 		return;
 	}
 
@@ -411,60 +401,56 @@ void Binify::Fixup(uint64_t i)
 
 // C api for binify
 #include "data_binify/binify.h"
-struct BINIFY_HANDLE_IMPL : public BINIFY_HANDLE
+#include "al2o3_memory/memory.h"
+#include "al2o3_cadt/vector.h"
+
+struct Binify_Context
 {
-	binify::Binify binny;
-	std::vector<uint8_t> data;
+	CADT_VectorHandle data;
 };
 
-bool BINIFY_StringToOStream( std::string const& txt, std::ostream* out_, std::string& log )
-{
-	binify::Binify binny;
-	bool okay = binny.parse(txt, out_);
-	log = binny.getLog();
-	return okay;
-}
-
- extern "C" BINIFY_HANDLE const * BINIFY_Alloc()
-{
-	return new BINIFY_HANDLE_IMPL();
-}
-
-extern "C" int BINIFY_Parse( BINIFY_HANDLE const * handle_, char const * const in_)
-{
-	assert(handle_ != nullptr);
-	BINIFY_HANDLE_IMPL* handle = (BINIFY_HANDLE_IMPL*)handle_;
-
+AL2O3_EXTERN_C Binify_ContextHandle Binify_Create(char const * const in) {
+	std::string tmp;
 	std::ostringstream dir;
-	bool okay = handle->binny.parse( in_, &dir );
-	if(!okay) return 0;
+	Binify_Context* ctx = (Binify_Context*)MEMORY_CALLOC(1, sizeof(Binify_Context));
+	if(ctx == NULL) goto failexit;
 
-	std::string tmp = dir.str();
-	handle->data.resize(tmp.size());
-	std::memcpy( handle->data.data(), tmp.data(), tmp.size());
-	return 1;
+	binify::Binify *binny = (binify::Binify*) MEMORY_TEMP_CALLOC(1, sizeof(binify::Binify));
+	new(binny) binify::Binify();
+
+	bool okay = binny->parse( in, &dir );
+	if(!okay) goto failexit;
+	if(binny) {
+		binny->~Binify();
+		MEMORY_TEMP_FREE(binny);
+	}
+
+	tmp = dir.str();
+	ctx->data = CADT_VectorCreate(sizeof(uint8_t));
+	CADT_VectorResize(ctx->data, tmp.size());
+	memcpy(CADT_VectorData(ctx->data), tmp.data(), tmp.size());
+
+	return ctx;
+
+failexit:
+	if(binny) {
+		binny->~Binify();
+		MEMORY_TEMP_FREE(binny);
+	}
+	MEMORY_FREE(ctx);
+	return nullptr;
 }
 
-extern "C" size_t BINIFY_BinarySize( BINIFY_HANDLE const * handle_ )
-{
-	assert(handle_ != nullptr);
-	BINIFY_HANDLE_IMPL* handle = (BINIFY_HANDLE_IMPL*)handle_;
-
-	return handle->data.size();
-
-}
-extern "C" uint8_t const *BINIFY_BinaryData( BINIFY_HANDLE const * handle_ )
-{
-	assert(handle_ != nullptr);
-	BINIFY_HANDLE_IMPL* handle = (BINIFY_HANDLE_IMPL*)handle_;
-
-	return handle->data.data();
+AL2O3_EXTERN_C void Binify_Destroy( Binify_ContextHandle handle ) {
+	MEMORY_FREE(handle);
 }
 
-extern "C" void BINIFY_Free( BINIFY_HANDLE const * handle_ )
-{
-	assert(handle_ != nullptr);
-	BINIFY_HANDLE_IMPL* handle = (BINIFY_HANDLE_IMPL*)handle_;
+AL2O3_EXTERN_C size_t Binify_BinarySize( Binify_ContextHandle handle ) {
+	ASSERT(handle != nullptr);
+	return CADT_VectorSize(handle->data);
 
-	delete handle;
+}
+AL2O3_EXTERN_C uint8_t const *Binify_BinaryData( Binify_ContextHandle handle ) {
+	ASSERT(handle != nullptr);
+	return (uint8_t const *)CADT_VectorData(handle->data);
 }
