@@ -594,7 +594,7 @@ static const flex_int16_t yy_rule_linenum[35] =
 #define YY_NO_INPUT 1
 #line 11 "lexer.l"
     #define YY_NO_UNISTD_H
-    #include "al2o3_tinystl/string.hpp"
+    #include "al2o3_tinystl\string.hpp"
     #include "ast.h"
     #include "parser.hpp"
     #include "scanner.h"

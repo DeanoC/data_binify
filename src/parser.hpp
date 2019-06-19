@@ -42,7 +42,7 @@
 // //                    "%code requires" blocks.
 #line 43 "parser.y" // lalr1.cc:379
 
-    #include "al2o3_tinystl/string.hpp"
+    #include "al2o3_tinystl\string.hpp"
 
     #include "ast.h"
     #include "location.hh"

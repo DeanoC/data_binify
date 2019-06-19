@@ -41,7 +41,7 @@
 %type <binify::ast::Type> type
 
 %code requires {
-    #include "al2o3_tinystl/string.hpp"
+    #include "al2o3_tinystl\string.hpp"
 
     #include "ast.h"
     #include "location.hh"

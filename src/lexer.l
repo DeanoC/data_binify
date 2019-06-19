@@ -9,7 +9,7 @@
 
 %{
     #define YY_NO_UNISTD_H
-    #include "al2o3_tinystl/string.hpp"
+    #include "al2o3_tinystl\string.hpp"
     #include "ast.h"
     #include "parser.hpp"
     #include "scanner.h"
