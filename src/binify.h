@@ -1,9 +1,9 @@
-#ifndef BINIFY_BINIFY_H
-#define BINIFY_BINIFY_H
+#ifndef DATA_BINIFY_BINIFY_H
+#define DATA_BINIFY_BINIFY_H
 
-#include "al2O3_platform/platform.h"
-#include "al2O3_tinystl/unordered_map.hpp"
-#include "al2O3_tinystl/string.hpp"
+#include "al2o3_platform/platform.h"
+#include "al2o3_tinystl/unordered_map.hpp"
+#include "al2o3_tinystl/string.hpp"
 #include "scanner.h"
 
 namespace binify

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef DATA_BINIFY_BINIFY_H
-#define DATA_BINIFY_BINIFY_H
+#ifndef BINIFY_BINIFY_H
+#define BINIFY_BINIFY_H
 
 #include "al2o3_platform/platform.h"
 

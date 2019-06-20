@@ -171,14 +171,14 @@ public:
 
 	// template 3 element write with optional comment
 	template<typename T>
-	void Write(T i0_, T i1_, T i2_, std::string const comment_ = "") {
+	void Write(T i0_, T i1_, T i2_, tinystl::string const comment_ = "") {
 		fmt::format_to(buffer, "{}, {}, {}", i0_, i1_, i2_);
 		Comment(comment_);
 	}
 
 	// template 4 element write with optional comment
 	template<typename T>
-	void Write(T i0_, T i1_, T i2_, T i3_, std::string const comment_ = "") {
+	void Write(T i0_, T i1_, T i2_, T i3_, tinystl::string const comment_ = "") {
 		fmt::format_to(buffer, "{}, {}, {}, {}", i0_, i1_, i2_, i3_);
 		Comment(comment_);
 	}
@@ -249,7 +249,7 @@ public:
 
 	template<typename T>
 	void WriteSize(T i_, tinystl::string const comment_ = "") {
-		write_address_type();
+		WriteAddressType();
 		fmt::format_to(buffer, "{}", i_);
 		Comment(comment_);
 	}

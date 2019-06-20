@@ -412,13 +412,16 @@ struct Binify_Context
 AL2O3_EXTERN_C Binify_ContextHandle Binify_Create(char const * const in) {
 	std::string tmp;
 	std::ostringstream dir;
+	bool okay;
+	binify::Binify *binny;
+
 	Binify_Context* ctx = (Binify_Context*)MEMORY_CALLOC(1, sizeof(Binify_Context));
 	if(ctx == NULL) goto failexit;
 
-	binify::Binify *binny = (binify::Binify*) MEMORY_TEMP_CALLOC(1, sizeof(binify::Binify));
+	binny = (binify::Binify*) MEMORY_TEMP_CALLOC(1, sizeof(binify::Binify));
 	new(binny) binify::Binify();
 
-	bool okay = binny->parse( in, &dir );
+	okay = binny->parse( in, &dir );
 	if(!okay) goto failexit;
 	if(binny) {
 		binny->~Binify();
