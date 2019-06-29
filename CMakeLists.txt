@@ -36,7 +36,6 @@ set(Deps
 		al2o3_cmath
 		al2o3_cadt
 		al2o3_vfile
-		al2o3_lz4
 		al2o3_tinystl
 		fmt
 		)
