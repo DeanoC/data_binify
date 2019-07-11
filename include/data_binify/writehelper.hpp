@@ -8,7 +8,7 @@
 #include "al2o3_tinystl/unordered_set.hpp"
 #include "al2o3_tinystl/unordered_map.hpp"
 #include "al2o3_vfile/vfile.h"
-#include "fmt/format.h"
+#include "utils_fmt/format.h"
 
 namespace Binify {
 
