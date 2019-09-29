@@ -1,3 +1,7 @@
+![](https://github.com/DeanoC/data_binify/Build/badge.svg)
+![](https://github.com/DeanoC/data_binify/Test/badge.svg)
+
+
 # data_binify
 Binify is a small utility which produces binary files from text descriptions.
 
